@@ -1,9 +1,16 @@
+let memory;
+
 function getValue(value) {
-    console.log(value);
+    let display = document.getElementById("screen");
+    display.textContent = value;
+}
+
+function displayValue() {
+    
 }
     
-document.querySelectorAll("button").forEach(el => {
-    el.addEventListener("click", () => {
-        getValue(el.textContent);
+document.querySelectorAll("button").forEach(element => {
+    element.addEventListener("click", () => {
+        getValue(element.textContent);
     })
-})
+});
