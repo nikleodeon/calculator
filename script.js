@@ -9,6 +9,7 @@ let currDisplay = document.querySelector(".curr-display");
 let operator = "";
 let prevValue = "";
 let currValue = "";
+let firstNum = "";
 
 numbers.forEach((number) => number.addEventListener("click", function(e) {
     displayNumber(e.target.textContent);
@@ -16,7 +17,21 @@ numbers.forEach((number) => number.addEventListener("click", function(e) {
 }))
 
 operators.forEach((op) => op.addEventListener("click", function(e) {
-    if (!prevValue.includes("+") && !prevValue.includes("-") && !prevValue.includes("×") && !prevValue.includes("/")) {
+    if (prevValue != "" && currValue != "") {
+        operate();
+        operator = op.textContent;
+        prevDisplay.textContent = prevValue + " " + operator;
+        currValue = "";
+        if (currValue = "") {
+            currDisplay.textContent = "0";
+        } else {
+            console.log(prevValue);
+            console.log(currValue);
+            currValue.toString();
+            currDisplay.textContent = currValue;
+        }
+        console.log("please work");
+    } else if (!prevValue.includes("+") && !prevValue.includes("-") && !prevValue.includes("×") && !prevValue.includes("/")) {
         displayOperator(e.target.textContent);
         prevDisplay.textContent = prevValue + " " + operator;
         currDisplay.textContent = currValue;
@@ -32,15 +47,7 @@ clear.addEventListener("click", function() {
 })
 
 equal.addEventListener("click", function() {
-    if (currValue != 0 && prevValue != "") {
-        operate();
-        prevDisplay.textContent = "";
-        if (prevValue.length <= 5) {
-            currDisplay.textContent = prevValue;
-        } else {
-            currDisplay.textContent = prevValue.slice(0,5);
-        }
-    }
+    calculate();
 })
 
 decimal.addEventListener("click", function() {
@@ -50,6 +57,35 @@ decimal.addEventListener("click", function() {
 deleteNum.addEventListener("click", function() {
     removeDigit();
 })
+
+function calculate() {
+    if (currValue != 0 && prevValue != "") {
+        operate();
+        prevDisplay.textContent = "";
+        if (prevValue.length <= 5) {
+            currDisplay.textContent = prevValue;
+        } else {
+            currDisplay.textContent = prevValue.slice(0,5);
+        }
+    } else if (operator === "/" && currValue === "0") {
+        prevDisplay.textContent = "";
+        currDisplay.textContent = "Why do that?"
+        return
+    } else {
+        prevDisplay.textContent = "";
+        currDisplay.textContent = "ERROR";
+    }
+}
+
+function calculateMultiOperator() {
+    operate();
+    prevDisplay.textContent = "";
+    if (prevValue.length <= 5) {
+        currDisplay.textContent = prevValue + " " + operator;
+    } else {
+        currDisplay.textContent = prevValue.slice(0,5) + " " + operator;
+    }
+}
 
 function displayNumber(num) {
     if (currValue.length < 6) {
@@ -78,7 +114,7 @@ function operate() {
     }
 
     prevValue = prevValue.toString();
-    currValue = prevValue.toString();
+    currValue = currValue.toString();
 }
 
 function addDecimal() {
@@ -89,7 +125,7 @@ function addDecimal() {
 }
 
 function removeDigit() {
-    currValue = currValue.substring(0, currValue.length - 1);
+    currValue = currValue.slice(0, currValue.length-1);
     if (currValue.length === 0) {
         currValue = "";
         currDisplay.textContent = "0";
@@ -97,36 +133,3 @@ function removeDigit() {
         currDisplay.textContent = currValue;
     }
 }
-
-/* const keys = document.getElementsByTagName("button");
-const display = document.getElementById("display");
-
-function calcDisplay(e) {
-
-}
-
-for (let i = 0; i < keys.length; i++) {
-    keys[i].addEventListener("click", e => {
-        const key = e.target;
-        const keyContent = key.textContent;
-        const displayedNum = display.textContent;
-        if (key.classList.contains("number")) {
-            if (displayedNum === "0") {
-                display.textContent = keyContent;
-            } else {
-                display.textContent = displayedNum + keyContent;
-            }
-        } else if (key.classList.contains("operation")) {
-            display.textContent = displayedNum + " " + keyContent + " ";
-            console.log("this is an operator");
-        } else if (key.classList.contains("delete")) {
-            console.log("this is delete");
-        } else if (key.classList.contains("all-clear")) {
-            console.log("this is all clear");
-        } else if (key.classList.contains("equal")) {
-            console.log("this is equal");
-        } else if (key.classList.contains("decimal")) {
-            display.textContent = displayedNum + ".";
-        }
-    })
-} */
