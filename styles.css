@@ -8,6 +8,13 @@ body {
     background-color: #43457f;
 }
 
+h1 {
+    text-align: center;
+    color:#feda84;
+    font-family: "Titan One", cursive;
+    font-size: 52px;
+}
+
 .calculator {
     display: flex;
     flex-wrap: wrap;
